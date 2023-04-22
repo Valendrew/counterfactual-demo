@@ -1,0 +1,10 @@
+dice_ml
+fastapi==0.95.1
+lightgbm
+numpy
+omlt
+onnx
+pandas
+scikit-learn
+torch
+uvicorn==0.21.1

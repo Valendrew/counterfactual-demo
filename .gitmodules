@@ -1,0 +1,3 @@
+[submodule "backend/counterfactual"]
+	path = backend/counterfactual
+	url = https://github.com/Valendrew/counterfactual-explanations
