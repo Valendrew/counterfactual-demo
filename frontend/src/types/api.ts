@@ -24,3 +24,9 @@ export type Smartphone = {
 export type SmartphoneResponse = {
     [key: string]: Smartphone;
 };
+
+export type SmartphoneInference = {
+    prediction: number;
+    min_price: number;
+    max_price: number;
+}
