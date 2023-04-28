@@ -1,6 +1,5 @@
 export type Smartphone = {
-    misc_price: number;
-    oem_model: string;
+    misc_price: number | string;
     display_size: number;
     battery: number;
     memory_ram_gb: number;
@@ -17,8 +16,11 @@ export type Smartphone = {
     is_waterproof: boolean;
     network_technology: string;
     num_main_camera: number;
-    num_selfie_camera: number;
-    display_resolution: string;
+    launch_announced?: number;
+    oem_model?: string;
+    display_width?: number;
+    display_height?: number;
+    display_resolution?: string;
 };
 
 export type SmartphoneResponse = {
@@ -27,6 +29,7 @@ export type SmartphoneResponse = {
 
 export type SmartphoneInference = {
     prediction: number;
+    ground_truth: number;
     min_price: number;
     max_price: number;
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import InputSearch from './InputSearch.vue'
-import ModelFeatures from './ModelFeatures.vue'
+import FeaturesContainer from './ModelFeatures/FeaturesContainer.vue'
 import ModelContainer from './ModelCounterfactual/ModelContainer.vue'
 import type { Smartphone, SmartphoneResponse } from '../types/api'
 import { ref } from 'vue'
@@ -34,7 +34,7 @@ async function searchInputModel(event: Event) {
 
     // Get the response from the server
     const results = await res.json()
-    searchList.value = JSON.parse(results)
+    searchList.value = results
 }
 
 function showModel(modelId: string) {
@@ -57,7 +57,7 @@ function showModel(modelId: string) {
             @search-input-model="searchInputModel"
             @show-model="showModel"
         />
-        <ModelFeatures v-if="Object.keys(selectedModel).length > 0" :smartphone="selectedModel" />
+        <FeaturesContainer v-if="Object.keys(selectedModel).length > 0" :smartphone="selectedModel" />
         <ModelContainer
             v-if="Object.keys(selectedModel).length > 0"
             :key="selectedIdx"
