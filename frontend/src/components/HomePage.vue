@@ -57,7 +57,7 @@ function showModel(modelId: string) {
             @search-input-model="searchInputModel"
             @show-model="showModel"
         />
-        <FeaturesContainer v-if="Object.keys(selectedModel).length > 0" :smartphone="selectedModel" />
+        <FeaturesContainer v-if="Object.keys(selectedModel).length > 0" :smartphone="selectedModel" :to-check="false" />
         <ModelContainer
             v-if="Object.keys(selectedModel).length > 0"
             :key="selectedIdx"
