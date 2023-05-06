@@ -89,6 +89,7 @@ OMLT_DICT = {
     "solver_options": {"timelimit": 100, "strategy": "rand_guess_and_bound"},
     "verbose": True,
 }
+
 CONTINUOUS_FEATURES = [
     "display_size",
     "battery",

@@ -8,7 +8,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-row w-full">
         <button
             class="w-full h-10 rounded-md bg-secondary p-2 text-white"
             @click="$emit('fetchInference')"

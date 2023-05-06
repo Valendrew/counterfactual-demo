@@ -52,9 +52,9 @@ async function fetchCounterfactual() {
         id="modelCounterfactual"
         class="col-span-3 row-span-5 h-full w-full overflow-y-auto rounded-lg bg-primary"
     >
-        <div class="grid-cols-2 grid w-full justify-center gap-x-8 border-t-2 p-2">
-            <Counterfacutal @fetch-counterfactual="fetchCounterfactual" :counterfactual-result="counterfactualResult"/>
+        <div class="flex flex-col w-full items-center gap-y-4 border-t-2 p-2">
             <Inference @fetch-inference="fetchInference" :inference-result="inferenceResult" />
+            <Counterfacutal @fetch-counterfactual="fetchCounterfactual" :counterfactual-result="counterfactualResult"/>
         </div>
     </div>
 </template>

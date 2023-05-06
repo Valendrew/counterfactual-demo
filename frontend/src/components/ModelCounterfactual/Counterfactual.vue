@@ -9,9 +9,9 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col w-full">
         <button
-            class="h-10 w-full rounded-md bg-secondary p-2 text-white"
+            class="w-full rounded-md bg-secondary p-2 text-white"
             @click="$emit('fetchCounterfactual')"
         >
             Compute counterfactual
