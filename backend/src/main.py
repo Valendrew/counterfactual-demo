@@ -14,7 +14,7 @@ import torch
 import sys
 
 sys.path.insert(0, "counterfactual")
-from counterfactual.utils import util_counterfactual, util_models
+from counterfactual.utils import util_counterfactual, util_models, util_base_cf
 
 
 # create the app
@@ -175,4 +175,12 @@ async def counterfactual(data: CounterFactualData):
     cf_only = cfs.iloc[0]
     price_min, price_max = cf_only.pop("misc_price_min"), cf_only.pop("misc_price_max")
     cf_only["misc_price"] = f"{price_min} - {price_max}"
-    return json.loads(cf_only.to_json())
+    cf_only.name = "counterfactual"
+
+    original_sample = util_base_cf.inverse_pipeline(FEATURES_PIPELINE, sample)
+    original_only = original_sample.iloc[0].copy()
+    price_min, price_max = original_only.pop("misc_price_min"), original_only.pop("misc_price_max")
+    original_only["misc_price"] = f"{price_min} - {price_max}"
+    original_only.name = "original"
+    
+    return json.loads(pd.concat([original_only, cf_only], axis=1).T.to_json(orient="index"))

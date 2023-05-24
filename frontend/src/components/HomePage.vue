@@ -2,7 +2,7 @@
 import InputSearch from './InputSearch.vue'
 import FeaturesContainer from './ModelFeatures/FeaturesContainer.vue'
 import ModelContainer from './ModelCounterfactual/ModelContainer.vue'
-import type { Smartphone, SmartphoneResponse } from '../types/api'
+import type { Smartphone, SmartphoneResponse, SmartphoneHighlight } from '../types/api'
 import { ref } from 'vue'
 
 const searchModel = ref('')
@@ -57,12 +57,45 @@ function showModel(modelId: string) {
             @search-input-model="searchInputModel"
             @show-model="showModel"
         />
-        <FeaturesContainer v-if="Object.keys(selectedModel).length > 0" :smartphone="selectedModel" :to-check="false" />
-        <ModelContainer
-            v-if="Object.keys(selectedModel).length > 0"
-            :key="selectedIdx"
-            :smartphone="selectedModel"
-            :id="selectedIdx"
-        />
+
+        <!-- ORIGINAL SMARTPHONE CONTAINER -->
+        <div class="order-last col-span-2 col-start-1 row-span-4 w-full h-full overflow-y-auto rounded-lg bg-primary">
+            <div class="flex h-full flex-col">
+                <div class="bg-secondary py-2">
+                    <p class="text-center text-xl text-primary">ORIGINAL SMARTPHONE</p>
+                </div>
+                <FeaturesContainer
+                    :smartphone="selectedModel"
+                    :to-check="false"
+                    :highlight-features="{} as SmartphoneHighlight"
+                    v-if="Object.keys(selectedModel).length > 0"
+                />
+                <div v-else class="flex flex-col items-center pt-8">
+                    <p class="text-md">No smartphone selected.</p>
+                    <p class="text-sm">Please search one using the input above.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- COUNTERFACTUAL CONTAINER -->
+        <div
+            class="row-span-5 col-span-3 h-full w-full overflow-y-auto rounded-lg bg-primary"
+        >
+            <div class="flex h-full flex-col">
+                <div class="bg-secondary py-2">
+                    <p class="text-center text-xl text-primary">COUNTERFACTUAL SMARTPHONE</p>
+                </div>
+                <ModelContainer
+                    :key="selectedIdx"
+                    :smartphone="selectedModel"
+                    :id="selectedIdx"
+                    v-if="Object.keys(selectedModel).length > 0"
+                />
+                <div v-else class="flex flex-col items-center pt-8">
+                    <p class="text-md">No smartphone selected.</p>
+                    <p class="text-sm">Please search one using the input above.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </template>

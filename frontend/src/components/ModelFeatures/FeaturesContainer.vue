@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { defineProps } from 'vue'
-import type { Smartphone } from '@/types/api'
+import type { Smartphone, SmartphoneHighlight } from '@/types/api'
 
 export interface Props {
     smartphone: Smartphone
     formatInvert?: boolean
     toCheck?: boolean
+    highlightFeatures: SmartphoneHighlight
 }
 const props = withDefaults(defineProps<Props>(), {
     formatInvert: false,
-    toCheck: true
+    toCheck: true,
 })
 
 let initialStructure
@@ -36,11 +36,7 @@ if (props.formatInvert) {
         Network: ['has_wlan_5ghz', 'network_technology'],
         Memory: ['has_memory_card_slot', 'memory_rom_gb', 'memory_ram_gb'],
         Audio: ['has_stereo_speakers', 'has_3.5mm_jack'],
-        Camera: [
-            'main_camera_resolution',
-            'num_main_camera',
-            'selfie_camera_resolution',
-        ],
+        Camera: ['main_camera_resolution', 'num_main_camera', 'selfie_camera_resolution'],
         Miscellaneous: [] as string[]
     }
 }
@@ -61,9 +57,7 @@ const smartphoneFeatures = ref(expandModel(props.smartphone, initialStructure, h
 </script>
 
 <template>
-    <div
-        class="order-last col-span-2 col-start-1 row-span-4 flex h-full w-full flex-col items-center gap-y-2 overflow-y-auto rounded-lg bg-primary p-2"
-    >
+    <div class="flex h-full w-full flex-col items-center gap-y-2 overflow-y-auto p-2">
         <!--  Container for the model name -->
         <div v-for="features in headerFeatures" :key="features">
             <p class="w-full text-xl">{{ smartphone[features as keyof Smartphone] }}</p>
@@ -85,13 +79,22 @@ const smartphoneFeatures = ref(expandModel(props.smartphone, initialStructure, h
                 >
                     <div class="align-center flex flex-row gap-x-2">
                         <input v-if="props.toCheck" type="checkbox" checked />
-                        <p>{{ feature }}</p>
+                        <p v-if="feature in props.highlightFeatures && props.highlightFeatures[feature]"
+                            class="text-danger"
+                        >
+                            {{ feature }}
+                        </p>
+                        <p v-else>{{ feature }}</p> 
                     </div>
                     <p v-if="feature.startsWith('has_') || feature.startsWith('is_')">
                         {{ smartphone[feature as keyof Smartphone] == 1 ? '✔️' : '❌' }}
                     </p>
                     <p v-else>
-                        {{ typeof(smartphone[feature as keyof Smartphone]) == 'number' ? (smartphone[feature as keyof Smartphone] as number).toFixed(2) : smartphone[feature as keyof Smartphone] }}
+                        {{
+                            typeof smartphone[feature as keyof Smartphone] == 'number'
+                                ? (smartphone[feature as keyof Smartphone] as number).toFixed(2)
+                                : smartphone[feature as keyof Smartphone]
+                        }}
                     </p>
                 </div>
             </div>

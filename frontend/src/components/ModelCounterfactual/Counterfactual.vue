@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import FeaturesContainer from '../ModelFeatures/FeaturesContainer.vue'
-import type { Smartphone } from '@/types/api'
 
 const props = defineProps<{
-    counterfactualResult: Smartphone
     hasSpinner: boolean
 }>()
 </script>
@@ -17,7 +14,10 @@ const props = defineProps<{
         >
             Compute counterfactual
         </button>
-        <div v-if="hasSpinner" class="flex h-full w-full flex-row items-center justify-center">
+        <div
+            v-if="props.hasSpinner"
+            class="flex h-full w-full flex-row items-center justify-center"
+        >
             <svg
                 aria-hidden="true"
                 class="mr-2 h-8 w-8 animate-spin fill-blue-600 text-gray-200 dark:text-gray-600 md:h-12 md:w-12 lg:h-16 lg:w-16"
@@ -36,14 +36,6 @@ const props = defineProps<{
                 </g>
             </svg>
             <span class="sr-only">Loading...</span>
-        </div>
-
-        <div v-if="Object.keys(counterfactualResult).length > 0">
-            <FeaturesContainer
-                :smartphone="counterfactualResult"
-                :to-check="false"
-                :format-invert="true"
-            />
         </div>
     </div>
 </template>
