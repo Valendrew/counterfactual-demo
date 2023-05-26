@@ -77,7 +77,7 @@ FEATURES_PIPELINE: ColumnTransformer = pickle.load(
     open("counterfactual/config/pipeline.pkl", "rb")
 )
 
-# OMLT parameters dictionary for the counterfactual
+# parameters dictionary for the counterfactual
 DICE_DICT = {
     "target" : "misc_price",
     "n_cf" : 1,
@@ -164,7 +164,7 @@ async def counterfactual(data: CounterFactualData):
         cfs = util_counterfactual.generate_counterfactuals_from_sample_list(
             NN_MODEL, "dice", TRAIN_FEAT_DATA, TRAIN_LABEL_DATA, X_sample, y_sample,
             feature_props=FEATURE_PROPS, type_cf=data.target, backend="PYT", target_column="misc_price",
-            dice_method="random", pipeline=FEATURES_PIPELINE, save_filename=None, **DICE_DICT,
+            dice_method="genetic", pipeline=FEATURES_PIPELINE, save_filename=None, **DICE_DICT,
         )
     except Exception as e:
         print(e)
